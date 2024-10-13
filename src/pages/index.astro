@@ -802,25 +802,18 @@ const user = validateUser();
           data-wow-delay="0.1s"
           style="max-width: 500px;"
         >
-          <h3 class="modal-title">Ingresar</h3>
+          <h3 class="modal-title">Comentarios</h3>
+          <p class="mb-4">
+            ¿Tienes alguna idea que quisieras compartir? ¡Deja tu comentario!
+          </p>
         </div>
         <form id="comment-form" class="row g-3">
           <div class="col-md-6">
-            <label for="comment-name" class="form-label">Usuario:</label>
+            <label for="comment-name" class="form-label">Nombre:</label>
             <input
               type="text"
+              id="comment-name"
               name="name"
-              placeholder="Nombre"
-              class="form-control"
-              required
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="comment-name" class="form-label">Contraseña:</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Contraseña"
               class="form-control"
               required
             />
@@ -838,55 +831,8 @@ const user = validateUser();
             <button type="submit" class="btn btn-primary">Enviar</button>
           </div>
         </form>
-        
-        <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('comment-form') as HTMLFormElement;
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    // Ahora TypeScript sabe que form es un HTMLFormElement
-    const name = form.elements['name'].value;
-    const password = form.elements['password'].value;
-
-    try {
-      const response = await fetch('./api/validate-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: name, password }),
-      });
-
-      const result = await response.json();
-
-      if (result.isValid) {
-        alert('Usuario válido: ' + result.message);
-      } else {
-        alert('Error: ' + result.message);
-      }
-    } catch (error) {
-      console.error('Error al validar el usuario:', error);
-      alert('Ocurrió un error al intentar validar el usuario.');
-    }
-  });
-});
-        </script>
-
-
-
         <div id="comments-list" class="mt-4">
           <!-- Aquí se mostrarán los comentarios -->
-          {
-            comments.map((comment) => (
-              <div class="comment">
-                <h5 class="card-title">{comment.username}</h5>
-                <p class="cart-text">{comment.comment}</p>
-                <p class="cart-text">{comment.points}</p>
-              </div>
-            ))
-          }
         </div>
       </div>
     </div>
@@ -1000,23 +946,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // Manejar el envío del formulario
-      // document
-      //   .getElementById("comment-form")
-      //   .addEventListener("submit", function (event) {
-      //     event.preventDefault();
+      document
+        .getElementById("comment-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-      //     const name = document.getElementById("comment-name").value;
-      //     const comment = document.getElementById("comment-text").value;
+          const name = document.getElementById("comment-name").value;
+          const comment = document.getElementById("comment-text").value;
 
-      //     const comments = JSON.parse(localStorage.getItem("comments")) || [];
-      //     const index = comments.length;
+          const comments = JSON.parse(localStorage.getItem("comments")) || [];
+          const index = comments.length;
 
-      //     renderComment(name, comment, index);
-      //     saveComment(name, comment);
+          renderComment(name, comment, index);
+          saveComment(name, comment);
 
-      //     // Limpiar el formulario
-      //     document.getElementById("comment-form").reset();
-      //   });
+          // Limpiar el formulario
+          document.getElementById("comment-form").reset();
+        });
     </script>
   </body>
 </html>
