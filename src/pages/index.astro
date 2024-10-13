@@ -1,5 +1,9 @@
 ---
+import { getComments } from "./database.js";
+import { validateUser } from "./apidb.js";
 
+const comments = getComments();
+const user = validateUser();
 ---
 
 <!doctype html>
@@ -12,7 +16,7 @@
     <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link href="" rel="icon" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -798,15 +802,25 @@
           data-wow-delay="0.1s"
           style="max-width: 500px;"
         >
-          <h3 class="modal-title">Comentarios</h3>
+          <h3 class="modal-title">Ingresar</h3>
         </div>
         <form id="comment-form" class="row g-3">
           <div class="col-md-6">
-            <label for="comment-name" class="form-label">Nombre:</label>
+            <label for="comment-name" class="form-label">Usuario:</label>
             <input
               type="text"
               id="comment-name"
               name="name"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="comment-name" class="form-label">Contraseña:</label>
+            <input
+              type="text"
+              id="comment-name"
+              name="password"
               class="form-control"
               required
             />
@@ -826,6 +840,15 @@
         </form>
         <div id="comments-list" class="mt-4">
           <!-- Aquí se mostrarán los comentarios -->
+          {
+            comments.map((comment) => (
+              <div class="comment">
+                <h5 class="card-title">{comment.username}</h5>
+                <p class="cart-text">{comment.comment}</p>
+                <p class="cart-text">{comment.points}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
